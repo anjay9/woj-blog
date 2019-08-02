@@ -1,26 +1,44 @@
 import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline, Container } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 
-import Header from './Header';
-import PostBox from './PostBox';
+import NavBar from './NavBar';
+import Body from './Body';
 import Footer from './Footer';
 
-const useStyles = makeStyles(theme => ({
-}));
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openedPostNumber: 'none',
+    };
+    this.mainTitleClick = this.mainTitleClick.bind(this);
+  }
+  mainTitleClick() {
+    window.scrollTo(0, 0);
+    this.setState({ openedPostNumber: 'none' });
+  }
+  cardClick(postNumber) {
+    window.scrollTo(0, 0);
+    this.setState({ openedPostNumber: postNumber });
+  }
+  render (){
+    const { openedPostNumber } = this.state;
+    return (
+      <Fragment>
+        <CssBaseline />
 
-function App() {
-  const classes = useStyles();
-  return (
-    <Fragment>
-      <CssBaseline />
-      <Container>
-        <Header />
-        <PostBox />
+        <NavBar
+          mainTitleClick={ this.mainTitleClick }
+        />
+        <Body
+          openedPostNumber={ openedPostNumber }
+          cardClick={ (postNumber) => this.cardClick(postNumber) }
+        />
         <Footer />
-      </Container>
-    </Fragment>
-  );
+
+      </Fragment>
+    );
+  }
 }
 
 export default App;
